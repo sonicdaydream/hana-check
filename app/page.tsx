@@ -314,6 +314,12 @@ export default function HanaCheck() {
 
         </div>
 
+        <div style={css.blogLink}>
+          <a href="/blog" style={css.blogAnchor}>
+            鼻水の症状を調べる → 記事一覧
+          </a>
+        </div>
+
         <footer style={css.footer}>
           このプロトタイプは耳鼻科医との連携を目指して開発中です
         </footer>
@@ -474,6 +480,8 @@ const css: Record<string, React.CSSProperties> = {
     fontSize:11, color:"#9CA3AF", borderTop:"1px solid #F3F4F6",
     paddingTop:12, marginBottom:20, lineHeight:1.6,
   },
+  blogLink: { textAlign:"center", marginBottom:12 },
+  blogAnchor: { fontSize:13, color:"#0891B2", textDecoration:"none", fontWeight:500 },
   footer: { textAlign:"center", fontSize:12, color:"#9CA3AF", lineHeight:1.8 },
 };
 
