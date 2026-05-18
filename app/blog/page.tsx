@@ -39,13 +39,7 @@ export default function BlogPage() {
   return (
     <div style={{ background: "#F7F8FA", minHeight: "100vh", padding: "40px 24px" }}>
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
-        <Link
-          href="/"
-          style={{ color: "#0891B2", fontSize: 14, textDecoration: "none" }}
-        >
-          ← トップページへ戻る
-        </Link>
-        <h1 style={{ fontSize: 28, fontWeight: 700, margin: "24px 0 8px", color: "#111" }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, margin: "0 0 8px", color: "#111" }}>
           ブログ
         </h1>
         <p style={{ color: "#555", marginBottom: 32, fontSize: 15 }}>

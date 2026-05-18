@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import "./globals.css";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "ハナ・チェック — 鼻水AIチェッカー",
@@ -8,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body style={{margin:0}}>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

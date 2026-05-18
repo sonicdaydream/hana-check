@@ -149,12 +149,6 @@ export default function HanaCheck() {
     <div style={css.root}>
       <style>{FONTS + globalCss}</style>
 
-      {/* 監修募集バナー */}
-      <div style={css.banner}>
-        <span style={css.bannerPulse} className="pulse" />
-        <span style={css.bannerText}>👨‍⚕️ 耳鼻科の先生へ：医師監修を募集しています — Xでご連絡ください</span>
-      </div>
-
       <div style={css.page}>
         {/* ヘッダー */}
         <header style={css.header}>
@@ -376,14 +370,6 @@ const css: Record<string, React.CSSProperties> = {
     wordBreak:"normal",
     overflowWrap:"anywhere",
   },
-  banner: {
-    display:"flex", alignItems:"center", gap:8,
-    background:"#0C4A6E", padding:"9px 16px",
-  },
-  bannerPulse: {
-    width:7, height:7, borderRadius:"50%", background:"#38BDF8", flexShrink:0,
-  },
-  bannerText: { fontSize:12, color:"#BAE6FD", lineHeight:1.4 },
   page: { maxWidth:480, margin:"0 auto", padding:"20px 16px 48px" },
   header: { textAlign:"center", marginBottom:20 },
   logoWrap: {
