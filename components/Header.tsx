@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Header() {
   return (
     <header>
@@ -20,12 +18,12 @@ export default function Header() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         background: "#0891B2", padding: "10px 20px",
       }}>
-        <Link href="/" style={{
+        <a href="/" style={{
           color: "#fff", fontWeight: 800, fontSize: 18,
           textDecoration: "none", display: "flex", alignItems: "center", gap: 6,
         }}>
           <span>👃</span>ハナ・チェック
-        </Link>
+        </a>
         <Link href="/blog" style={{
           color: "#CFFAFE", fontSize: 14, fontWeight: 500, textDecoration: "none",
         }}>
