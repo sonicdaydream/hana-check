@@ -37,7 +37,19 @@ export default async function BlogPostPage({
     "@context": "https://schema.org",
     "@type": "Article",
     headline: data.title,
+    description: data.description,
     datePublished: data.date,
+    url: `https://hana-check-beta.vercel.app/blog/${slug}`,
+    author: {
+      "@type": "Organization",
+      name: "ハナ・チェック編集部",
+      url: "https://hana-check-beta.vercel.app"
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ハナ・チェック",
+      url: "https://hana-check-beta.vercel.app"
+    }
   };
 
   return (
