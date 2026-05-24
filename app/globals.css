@@ -7,3 +7,24 @@ body {
 }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 .pulse { animation: pulse 2s infinite; }
+
+article table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+  font-size: 0.95em;
+}
+article table th,
+article table td {
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+  text-align: left;
+}
+article table th {
+  background: #f0f9ff;
+  font-weight: 600;
+  color: #0e7490;
+}
+article table tr:nth-child(even) td {
+  background: #f9fafb;
+}
