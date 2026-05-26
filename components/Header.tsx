@@ -26,11 +26,18 @@ export default function Header() {
         }}>
           <span>👃</span>ハナ・チェック
         </a>
-        <Link href="/blog" style={{
-          color: "#CFFAFE", fontSize: 14, fontWeight: 500, textDecoration: "none",
-        }}>
-          記事一覧
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <Link href="/blog" style={{
+            color: "#CFFAFE", fontSize: 14, fontWeight: 500, textDecoration: "none",
+          }}>
+            記事一覧
+          </Link>
+          <Link href="/about" style={{
+            color: "#CFFAFE", fontSize: 14, fontWeight: 500, textDecoration: "none",
+          }}>
+            運営者情報
+          </Link>
+        </div>
       </nav>
     </header>
   );
