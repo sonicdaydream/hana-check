@@ -18,14 +18,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "ハナ・チェック",
-              url: "https://hana-check-beta.vercel.app",
+              url: "https://hana-check.jp",
               description: "鼻水の写真からAIが状態を分析し、緊急度をお知らせするサービス"
             },
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "ハナ・チェック",
-              url: "https://hana-check-beta.vercel.app"
+              url: "https://hana-check.jp"
             }
           ]) }}
         />

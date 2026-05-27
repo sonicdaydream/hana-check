@@ -39,16 +39,16 @@ export default async function BlogPostPage({
     headline: data.title,
     description: data.description,
     datePublished: data.date,
-    url: `https://hana-check-beta.vercel.app/blog/${slug}`,
+    url: `https://hana-check.jp/blog/${slug}`,
     author: {
       "@type": "Organization",
       name: "ハナ・チェック編集部",
-      url: "https://hana-check-beta.vercel.app"
+      url: "https://hana-check.jp"
     },
     publisher: {
       "@type": "Organization",
       name: "ハナ・チェック",
-      url: "https://hana-check-beta.vercel.app"
+      url: "https://hana-check.jp"
     }
   };
 
