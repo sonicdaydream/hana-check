@@ -6,6 +6,9 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 export const metadata: Metadata = {
   title: "ハナ・チェック — 鼻水AIチェッカー",
   description: "鼻水の写真からAIが参考情報を提供します。医療診断ではありません。",
+  verification: {
+    google: "soiyQZuSWxOpYcGL6KXT3crQ0gkuuhmh1tlbr-SZmdM",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
