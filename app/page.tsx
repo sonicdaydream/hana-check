@@ -1,6 +1,11 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import {
+  Droplet, Leaf, Droplets, Wind, Search, RotateCcw, House, MessageCircle,
+  AlertTriangle, Camera, Sun, CameraOff, Lightbulb, Square,
+  type LucideIcon,
+} from "lucide-react";
 
 const FONTS = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
@@ -15,27 +20,40 @@ const urgencyConfig = [
   { label: "早急に受診",   color: "#EF4444", light: "#FEF2F2", border: "#FECACA" },
 ] as const;
 
-const colorTypes = [
-  { id:"clear",  emoji:"💧", label:"透明・白っぽい", desc:"サラサラ・水っぽい",  bg:"#EFF6FF", border:"#BFDBFE" },
-  { id:"yellow", emoji:"🌿", label:"黄色・黄緑",     desc:"ネバネバしている",    bg:"#FEFCE8", border:"#FEF08A" },
-  { id:"green",  emoji:"🍵", label:"緑・茶色",       desc:"濃くドロっとしている", bg:"#F0FDF4", border:"#BBF7D0" },
-  { id:"blood",  emoji:"🩸", label:"赤・血が混じる", desc:"出血している",        bg:"#FFF1F2", border:"#FECDD3" },
+type ColorType = {
+  id: string;
+  Icon: LucideIcon;
+  iconColor: string;
+  label: string;
+  desc: string;
+  bg: string;
+  border: string;
+};
+
+const colorTypes: ColorType[] = [
+  { id:"clear",  Icon:Droplet,  iconColor:"#3B82F6", label:"透明・白っぽい", desc:"サラサラ・水っぽい",   bg:"#EFF6FF", border:"#BFDBFE" },
+  { id:"yellow", Icon:Leaf,     iconColor:"#84CC16", label:"黄色・黄緑",     desc:"ネバネバしている",     bg:"#FEFCE8", border:"#FEF08A" },
+  { id:"green",  Icon:Droplets, iconColor:"#22C55E", label:"緑・茶色",       desc:"濃くドロっとしている", bg:"#F0FDF4", border:"#BBF7D0" },
+  { id:"blood",  Icon:Droplet,  iconColor:"#EF4444", label:"赤・血が混じる", desc:"出血している",         bg:"#FFF1F2", border:"#FECDD3" },
 ];
 
-const guideMap: Record<string, {
+type GuideStep = { Icon: LucideIcon; text: string };
+type Guide = {
   title: string;
-  steps: { icon: string; text: string }[];
+  steps: GuideStep[];
   note: string;
   noteColor: string;
   noteBg: string;
-}> = {
+};
+
+const guideMap: Record<string, Guide> = {
   clear: {
     title: "透明な鼻水の撮り方",
     steps: [
-      { icon:"👃", text:"鼻の下に垂れた状態で撮影する" },
-      { icon:"🌤", text:"明るい窓際など自然光の下で" },
-      { icon:"📵", text:"フラッシュはOFFにする" },
-      { icon:"🔍", text:"できるだけ近づいて撮る" },
+      { Icon: Droplet,   text: "鼻の下に垂れた状態で撮影する" },
+      { Icon: Sun,       text: "明るい窓際など自然光の下で" },
+      { Icon: CameraOff, text: "フラッシュはOFFにする" },
+      { Icon: Search,    text: "できるだけ近づいて撮る" },
     ],
     note: "ティッシュだと透明な鼻水は見えにくいため、垂れた状態がベストです",
     noteColor: "#0891B2",
@@ -44,10 +62,10 @@ const guideMap: Record<string, {
   yellow: {
     title: "黄色・黄緑の鼻水の撮り方",
     steps: [
-      { icon:"🤍", text:"白いティッシュに取って広げる" },
-      { icon:"🌤", text:"明るい場所で撮影する" },
-      { icon:"📵", text:"フラッシュはOFF（白飛び防止）" },
-      { icon:"🔍", text:"ティッシュを平らにして近づく" },
+      { Icon: Square,    text: "白いティッシュに取って広げる" },
+      { Icon: Sun,       text: "明るい場所で撮影する" },
+      { Icon: CameraOff, text: "フラッシュはOFF（白飛び防止）" },
+      { Icon: Search,    text: "ティッシュを平らにして近づく" },
     ],
     note: "白背景で色がはっきり確認できます",
     noteColor: "#B45309",
@@ -56,10 +74,10 @@ const guideMap: Record<string, {
   green: {
     title: "緑・茶色の鼻水の撮り方",
     steps: [
-      { icon:"🤍", text:"白いティッシュに取って広げる" },
-      { icon:"🌤", text:"明るい場所で撮影する" },
-      { icon:"📵", text:"フラッシュはOFFにする" },
-      { icon:"🔍", text:"粘度・量がわかるよう近づく" },
+      { Icon: Square,    text: "白いティッシュに取って広げる" },
+      { Icon: Sun,       text: "明るい場所で撮影する" },
+      { Icon: CameraOff, text: "フラッシュはOFFにする" },
+      { Icon: Search,    text: "粘度・量がわかるよう近づく" },
     ],
     note: "色が濃い場合はティッシュでもしっかり確認できます",
     noteColor: "#166534",
@@ -68,10 +86,10 @@ const guideMap: Record<string, {
   blood: {
     title: "血が混じる場合の撮り方",
     steps: [
-      { icon:"🤍", text:"白いティッシュに取って広げる" },
-      { icon:"🌤", text:"明るい場所で撮影する" },
-      { icon:"📵", text:"フラッシュはOFFにする" },
-      { icon:"⚠️", text:"量・頻度もメモしておく" },
+      { Icon: Square,        text: "白いティッシュに取って広げる" },
+      { Icon: Sun,           text: "明るい場所で撮影する" },
+      { Icon: CameraOff,     text: "フラッシュはOFFにする" },
+      { Icon: AlertTriangle, text: "量・頻度もメモしておく" },
     ],
     note: "血が大量・継続する場合は撮影より受診を優先してください",
     noteColor: "#B91C1C",
@@ -153,11 +171,14 @@ export default function HanaCheck() {
         {/* ヘッダー */}
         <header style={css.header}>
           <div style={css.logoWrap}>
-            <span style={css.logoEmoji}>👃</span>
+            <Wind size={30} color="#0891B2" strokeWidth={2} />
           </div>
           <h1 style={css.title}>ハナ・チェック</h1>
           <p style={css.subtitle}>鼻水の写真から、気になる状態をAIがお伝えします</p>
-          <div style={css.chip}>⚠️ 医療診断ではありません。参考情報の提供のみを目的としています</div>
+          <div style={css.chip}>
+            <AlertTriangle size={11} color="#92400E" strokeWidth={2} style={{flexShrink:0}} />
+            医療診断ではありません。参考情報の提供のみを目的としています
+          </div>
         </header>
 
         {/* ステップバー */}
@@ -188,7 +209,7 @@ export default function HanaCheck() {
                     style={{...css.colorCard, background:ct.bg, borderColor:ct.border}}
                     onClick={() => { setColorType(ct.id); setStep("guide"); }}
                     className="color-btn">
-                    <span style={css.colorEmoji}>{ct.emoji}</span>
+                    <ct.Icon size={32} color={ct.iconColor} strokeWidth={2} />
                     <span style={css.colorLabel}>{ct.label}</span>
                     <span style={css.colorDesc}>{ct.desc}</span>
                   </button>
@@ -205,13 +226,16 @@ export default function HanaCheck() {
               <div style={css.guideList}>
                 {guide.steps.map((gs, i) => (
                   <div key={i} style={css.guideRow}>
-                    <span style={css.guideIcon}>{gs.icon}</span>
+                    <div style={css.guideIconWrap}>
+                      <gs.Icon size={20} color="#0891B2" strokeWidth={2} />
+                    </div>
                     <span style={css.guideText}>{gs.text}</span>
                   </div>
                 ))}
               </div>
               <div style={{...css.guideNote, background:guide.noteBg, borderLeftColor:guide.noteColor, color:guide.noteColor}}>
-                💡 {guide.note}
+                <Lightbulb size={14} strokeWidth={2} style={{flexShrink:0, marginTop:2}} />
+                <span>{guide.note}</span>
               </div>
               <PrimaryBtn onClick={() => setStep("upload")}>撮影ガイドを確認した →</PrimaryBtn>
               <GhostBtn onClick={() => setStep("color")}>← 色を選び直す</GhostBtn>
@@ -240,7 +264,7 @@ export default function HanaCheck() {
                   </div>
                 ) : (
                   <div style={css.uploadHint}>
-                    <span style={{fontSize:36}}>📷</span>
+                    <Camera size={36} color="#9CA3AF" strokeWidth={1.5} />
                     <span style={css.uploadText}>写真をアップロード</span>
                     <span style={css.uploadSub}>タップまたはドラッグ＆ドロップ</span>
                   </div>
@@ -249,7 +273,11 @@ export default function HanaCheck() {
               {error && <div style={css.errorBox}>{error}</div>}
               {image && (
                 <PrimaryBtn onClick={handleAnalyze} disabled={loading}>
-                  {loading ? "分析中…" : "🔍 AIで状態をチェックする"}
+                  {loading ? "分析中…" : (
+                    <span style={{display:"inline-flex", alignItems:"center", gap:6}}>
+                      <Search size={16} strokeWidth={2} />AIで状態をチェックする
+                    </span>
+                  )}
                 </PrimaryBtn>
               )}
               <GhostBtn onClick={() => setStep("guide")}>← 撮影ガイドに戻る</GhostBtn>
@@ -287,10 +315,17 @@ export default function HanaCheck() {
                 </div>
               </div>
 
-              <InfoRow label="🏠 自宅でのケア目安" value={result.home_care} />
+              <InfoRow
+                label={
+                  <span style={{display:"inline-flex", alignItems:"center", gap:4}}>
+                    <House size={12} strokeWidth={2} />自宅でのケア目安
+                  </span>
+                }
+                value={result.home_care}
+              />
 
               <div style={css.adviceBox}>
-                <span style={{fontSize:20,flexShrink:0}}>💬</span>
+                <MessageCircle size={20} color="#0891B2" strokeWidth={2} style={{flexShrink:0}} />
                 <p style={css.adviceText}>{result.advice}</p>
               </div>
 
@@ -302,7 +337,11 @@ export default function HanaCheck() {
                 ※ これは参考情報であり、医療診断ではありません。気になる症状は必ず耳鼻咽喉科を受診してください。
               </div>
 
-              <PrimaryBtn onClick={reset}>🔄 もう一度チェックする</PrimaryBtn>
+              <PrimaryBtn onClick={reset}>
+                <span style={{display:"inline-flex", alignItems:"center", gap:6}}>
+                  <RotateCcw size={16} strokeWidth={2} />もう一度チェックする
+                </span>
+              </PrimaryBtn>
             </div>
           )}
 
@@ -351,7 +390,7 @@ function GhostBtn({children,onClick}: {children: React.ReactNode; onClick: () =>
 function Divider() {
   return <div style={{height:1,background:"#F3F4F6",margin:"16px 0"}} />;
 }
-function InfoRow({label,value}: {label: string; value: string}) {
+function InfoRow({label,value}: {label: React.ReactNode; value: string}) {
   return (
     <div style={{marginBottom:16}}>
       <div style={css.rowLabel}>{label}</div>
@@ -377,14 +416,14 @@ const css: Record<string, React.CSSProperties> = {
     border:"2px solid #A5F3FC", display:"flex", alignItems:"center",
     justifyContent:"center", margin:"0 auto 12px",
   },
-  logoEmoji: { fontSize:30 },
   title: {
     fontSize:26, fontWeight:800, margin:"0 0 6px",
     color:"#0E7490", letterSpacing:"-0.01em",
   },
   subtitle: { fontSize:14, color:"#6B7280", lineHeight:1.7, margin:"0 0 10px" },
   chip: {
-    display:"inline-block", fontSize:11, color:"#92400E",
+    display:"inline-flex", alignItems:"center", gap:4,
+    fontSize:11, color:"#92400E",
     background:"#FFFBEB", border:"1px solid #FDE68A",
     borderRadius:6, padding:"5px 10px", lineHeight:1.5,
   },
@@ -412,14 +451,14 @@ const css: Record<string, React.CSSProperties> = {
     cursor:"pointer", textAlign:"center", transition:"all 0.15s",
     background:"transparent",
   },
-  colorEmoji: { fontSize:26 },
   colorLabel: { fontSize:13, fontWeight:700, color:"#1F2937" },
   colorDesc: { fontSize:11, color:"#6B7280" },
   guideList: { display:"flex", flexDirection:"column", gap:12, marginBottom:16 },
   guideRow: { display:"flex", alignItems:"center", gap:12 },
-  guideIcon: { fontSize:20, width:28, textAlign:"center", flexShrink:0 },
+  guideIconWrap: { width:28, display:"flex", justifyContent:"center", flexShrink:0 },
   guideText: { fontSize:14, color:"#374151", lineHeight:1.6 },
   guideNote: {
+    display:"flex", alignItems:"flex-start", gap:6,
     fontSize:13, borderLeft:"3px solid", borderRadius:"0 8px 8px 0",
     padding:"10px 14px", marginBottom:20, lineHeight:1.6,
   },

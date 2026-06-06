@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wind, Stethoscope } from "lucide-react";
 
 export default function Header() {
   return (
@@ -12,8 +13,9 @@ export default function Header() {
           width: 7, height: 7, borderRadius: "50%",
           background: "#38BDF8", flexShrink: 0,
         }} />
-        <span style={{ fontSize: 12, color: "#BAE6FD", lineHeight: 1.4 }}>
-          🏥 耳鼻科の先生へ：医師監修を募集しています — Xでご連絡ください
+        <span style={{ fontSize: 12, color: "#BAE6FD", lineHeight: 1.4, display: "flex", alignItems: "center", gap: 5 }}>
+          <Stethoscope size={14} color="#BAE6FD" strokeWidth={2} style={{flexShrink: 0}} />
+          耳鼻科の先生へ：医師監修を募集しています — Xでご連絡ください
         </span>
       </div>
       <nav style={{
@@ -24,7 +26,7 @@ export default function Header() {
           color: "#fff", fontWeight: 800, fontSize: 18,
           textDecoration: "none", display: "flex", alignItems: "center", gap: 6,
         }}>
-          <span>👃</span>ハナ・チェック
+          <Wind size={20} color="#fff" strokeWidth={2} />ハナ・チェック
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
           <Link href="/blog" style={{

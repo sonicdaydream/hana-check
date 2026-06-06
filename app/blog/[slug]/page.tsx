@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Wind } from "lucide-react";
 
 const contentDir = path.join(process.cwd(), "content", "blog");
 
@@ -86,9 +87,9 @@ export default async function BlogPostPage({
         >
           <Link
             href="/"
-            style={{ color: "#0891B2", fontWeight: 600, fontSize: 16, textDecoration: "none" }}
+            style={{ color: "#0891B2", fontWeight: 600, fontSize: 16, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}
           >
-            👃 実際の鼻水を写真で確認する → /
+            <Wind size={18} strokeWidth={2} />実際の鼻水を写真で確認する →
           </Link>
         </div>
         <script
