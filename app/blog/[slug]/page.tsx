@@ -43,9 +43,15 @@ export default async function BlogPostPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://hana-check.jp/blog/${slug}`,
+    },
     headline: data.title,
     description: data.description,
+    keywords: Array.isArray(data.keywords) ? data.keywords.join(", ") : data.keywords,
     datePublished: data.date,
+    dateModified: data.updated ?? data.date,
     url: `https://hana-check.jp/blog/${slug}`,
     author: {
       "@type": "Organization",
@@ -56,7 +62,7 @@ export default async function BlogPostPage({
       "@type": "Organization",
       name: "ハナ・チェック",
       url: "https://hana-check.jp"
-    }
+    },
   };
 
   return (
