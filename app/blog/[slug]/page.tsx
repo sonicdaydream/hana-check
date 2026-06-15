@@ -21,7 +21,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const raw = readFileSync(path.join(contentDir, `${slug}.mdx`), "utf-8");
   const { data } = matter(raw);
-  return { title: data.title, description: data.description };
+  return {
+    title: data.title,
+    description: data.description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+  };
 }
 
 export default async function BlogPostPage({

@@ -7,6 +7,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ブログ — ハナ・チェック",
   description: "鼻水に関する症状・受診の目安に関する記事一覧",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 type PostMeta = {

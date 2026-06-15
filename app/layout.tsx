@@ -5,8 +5,12 @@ import Footer from "@/components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hana-check.jp"),
   title: "ハナ・チェック — 鼻水AIチェッカー",
   description: "鼻水の写真からAIが参考情報を提供します。医療診断ではありません。",
+  alternates: {
+    canonical: "/",
+  },
   verification: {
     google: "soiyQZuSWxOpYcGL6KXT3crQ0gkuuhmh1tlbr-SZmdM",
   },

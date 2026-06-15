@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "プライバシーポリシー — ハナ・チェック",
   description: "ハナ・チェックのプライバシーポリシーです。収集する情報・利用目的・Cookieの使用についてご案内します。",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

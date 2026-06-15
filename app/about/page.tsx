@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "運営者情報 — ハナ・チェック",
   description: "ハナ・チェックの運営者情報・サービス概要・免責事項についてご案内します。",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {
