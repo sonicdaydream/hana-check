@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Wind } from "lucide-react";
+import RelatedArticles from "@/components/RelatedArticles";
 
 const contentDir = path.join(process.cwd(), "content", "blog");
 
@@ -65,15 +66,30 @@ export default async function BlogPostPage({
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ホーム", item: "https://hana-check.jp" },
+      { "@type": "ListItem", position: 2, name: "記事一覧", item: "https://hana-check.jp/blog" },
+      { "@type": "ListItem", position: 3, name: data.title, item: `https://hana-check.jp/blog/${slug}` },
+    ],
+  };
+
   return (
     <div style={{ background: "#F7F8FA", minHeight: "100vh", padding: "40px 24px" }}>
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
-        <Link
-          href="/blog"
-          style={{ color: "#0891B2", fontSize: 14, textDecoration: "none" }}
-        >
-          ← 記事一覧へ戻る
-        </Link>
+        <nav aria-label="breadcrumb" style={{ fontSize: 13, color: "#666", marginBottom: 8 }}>
+          <Link href="/" style={{ color: "#0891B2", textDecoration: "none" }}>
+            ホーム
+          </Link>
+          {" > "}
+          <Link href="/blog" style={{ color: "#0891B2", textDecoration: "none" }}>
+            記事一覧
+          </Link>
+          {" > "}
+          <span>{data.title}</span>
+        </nav>
         <article
           style={{
             background: "#fff",
@@ -102,6 +118,7 @@ export default async function BlogPostPage({
             </section>
           )}
         </article>
+        <RelatedArticles currentSlug={slug} />
         <div style={{
           marginTop: 24,
           padding: "20px 24px",
@@ -144,7 +161,7 @@ export default async function BlogPostPage({
         </div>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, breadcrumbJsonLd]) }}
         />
       </div>
     </div>
